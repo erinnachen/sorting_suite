@@ -17,9 +17,13 @@ class BubbleSortTest < Minitest::Test
     assert_equal ["b", "a"],bs.swap("a","b")
   end
 
-  def test_returns_two_elements_sorted_correctly
+  def test_returns_two_elements_sorted_correctly_if_sorted
     bs = BubbleSort.new
     assert_equal ["a", "b"], bs.sort("ab".chars)
+  end
+
+  def test_returns_two_elements_sorted_correctly_if_unsorted
+    bs = BubbleSort.new
     assert_equal ["a", "b"], bs.sort("ba".chars)
   end
 
