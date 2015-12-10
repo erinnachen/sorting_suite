@@ -35,7 +35,6 @@ class BubbleSortTest < Minitest::Test
     unsorted = to_sort.shuffle
     unsorted = to_sort.shuffle while unsorted == to_sort
     assert_equal to_sort, bs.sort(unsorted)
-
   end
 
 end
