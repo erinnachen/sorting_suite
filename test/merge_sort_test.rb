@@ -72,19 +72,19 @@ class MergeSortTest < Minitest::Test
   end
 
   def test_sort_a_bunch_of_elements_even_number
-    isort = InsertionSort.new
+    msort = MergeSort.new
     sorted = (1..100).to_a
     shuffled = sorted.shuffle
     shuffled = sorted.shuffle while shuffled == sorted
-    assert_equal sorted, isort.sort(shuffled)
+    assert_equal sorted, msort.sort(shuffled)
   end
 
   def test_sort_a_bunch_of_elements_odd_number
-    isort = InsertionSort.new
+    msort = MergeSort.new
     sorted = (0..100).to_a
     shuffled = sorted.shuffle
     shuffled = sorted.shuffle while shuffled == sorted
-    assert_equal sorted, isort.sort(shuffled)
+    assert_equal sorted, msort.sort(shuffled)
   end
 
 end

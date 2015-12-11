@@ -30,10 +30,10 @@ class InsertionSortTest < Minitest::Test
 
   def test_sort_a_bunch_of_elements
     isort = InsertionSort.new
-    to_sort = (1..100).to_a
-    unsorted = to_sort.shuffle
-    unsorted = to_sort.shuffle while unsorted == to_sort
-    assert_equal to_sort, isort.sort(unsorted)
+    sorted = (1..100).to_a
+    shuffled = sorted.shuffle
+    shuffled = sorted.shuffle while shuffled == sorted
+    assert_equal sorted, isort.sort(shuffled)
   end
 
 end

@@ -35,10 +35,10 @@ class BubbleSortTest < Minitest::Test
 
   def test_sort_a_bunch_of_elements
     bs = BubbleSort.new
-    to_sort = (1..100).to_a
-    unsorted = to_sort.shuffle
-    unsorted = to_sort.shuffle while unsorted == to_sort
-    assert_equal to_sort, bs.sort(unsorted)
+    sorted = (1..100).to_a
+    shuffled = sorted.shuffle
+    shuffled = sorted.shuffle while shuffled == sorted
+    assert_equal sorted, bs.sort(shuffled)
   end
 
 end
