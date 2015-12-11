@@ -1,6 +1,7 @@
 require_relative 'bubble_sort'
 require_relative 'insertion_sort'
 require_relative 'merge_sort'
+require_relative 'selection'
 
 module SortingSuite
   class Benchmark
@@ -11,7 +12,7 @@ module SortingSuite
     end
 
     def known_sorters
-      [BubbleSort, InsertionSort, MergeSort]
+      [BubbleSort, InsertionSort, MergeSort, Selection]
     end
 
     def time(sorting_class, unsorted = (1..300).to_a.shuffle)
@@ -39,6 +40,7 @@ module SortingSuite
           fastest_sorter = sorter
           fastest_time = run_time
         end
+        puts "#{sorter} took %0.6f seconds" % (run_time)
       end
       "#{fastest_sorter} is the fastest"
     end
@@ -59,6 +61,7 @@ module SortingSuite
           slowest_sorter = sorter
           slowest_time = run_time
         end
+        puts "#{sorter} took %0.6f seconds" % (run_time)
       end
       "#{slowest_sorter} is the slowest"
     end
