@@ -28,6 +28,18 @@ class SelectionTest < Minitest::Test
     assert_equal [0,1,2,3,4], ssort.sort(to_sort)
   end
 
+  def test_sort_elements_already_sorted
+    ssort = Selection.new
+    to_sort = (1..10).to_a
+    assert_equal to_sort, ssort.sort(to_sort)
+  end
+
+  def test_sort_elements_sorted_in_reverse
+    ssort = Selection.new
+    to_sort = (1..10).to_a.reverse
+    assert_equal (1..10).to_a, ssort.sort(to_sort)
+  end
+
   def test_sort_a_bunch_of_elements
     ssort = Selection.new
     sorted = (1..100).to_a

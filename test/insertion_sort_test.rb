@@ -28,6 +28,19 @@ class InsertionSortTest < Minitest::Test
     assert_equal [0,1,2,3,4], isort.sort(to_sort)
   end
 
+  def test_sort_elements_already_sorted
+    isort = InsertionSort.new
+    to_sort = (1..10).to_a
+    assert_equal to_sort, isort.sort(to_sort)
+  end
+
+  def test_sort_elements_sorted_in_reverse
+    isort = InsertionSort.new
+    to_sort = (1..10).to_a.reverse
+    assert_equal (1..10).to_a, isort.sort(to_sort)
+  end
+
+
   def test_sort_a_bunch_of_elements
     isort = InsertionSort.new
     sorted = (1..100).to_a
@@ -84,6 +97,20 @@ class InplaceInsertSortTest < Minitest::Test
     ipisort = InsertionSort.new(array)
     assert_equal array.object_id, ipisort.inplace_sort.object_id
     assert_equal [0,1,2,3,4], ipisort.inplace_sort
+  end
+
+  def test_sort_elements_already_sorted
+    array = (1..10).to_a
+    ipisort = InsertionSort.new(array)
+    assert_equal array, ipisort.inplace_sort
+    assert_equal array.object_id, ipisort.inplace_sort.object_id
+  end
+
+  def test_sort_elements_sorted_in_reverse
+    array = (1..10).to_a.reverse
+    ipisort = InsertionSort.new(array)
+    assert_equal array, ipisort.inplace_sort
+    assert_equal array.object_id, ipisort.inplace_sort.object_id
   end
 
   def test_sort_a_bunch_of_elements
