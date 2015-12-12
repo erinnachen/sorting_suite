@@ -29,7 +29,6 @@ class InsertionSort
       array.delete_at(current_ind)
       array.insert(insert_ind, value)
     end
-    array
   end
 
   def find_insert_ind(current_ind)
