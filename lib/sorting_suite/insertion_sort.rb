@@ -5,11 +5,11 @@ module SortingSuite
       @array = array
     end
 
-    def sort(unsorted)
+    def sort
       sorted = []
-      unsorted.each do |element|
-        index = find_index_for_insertion(sorted,element)
-        sorted.insert(index,element)
+      array.each do |value|
+        index = find_index_for_insertion(sorted,value)
+        sorted.insert(index,value)
       end
       sorted
     end

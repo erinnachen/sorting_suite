@@ -4,50 +4,53 @@ require 'sorting_suite/insertion_sort'
 module SortingSuite
   class InsertionSortTest < Minitest::Test
     def test_sort_of_empty_array_is_the_empty_array
-      isort = InsertionSort.new
-      assert_equal [], isort.sort([])
+      isort = InsertionSort.new([])
+      assert_equal [], isort.sort
     end
 
     def test_sort_of_single_element_array_returns_array_with_the_same_value
-      isort = InsertionSort.new
-      assert_equal ["a"], isort.sort(["a"])
+      to_sort = ["a"]
+      isort = InsertionSort.new(to_sort)
+      assert_equal ["a"], isort.sort
     end
 
     def test_sorted_two_element_array_returns_an_array_with_elements_still_sorted
-      isort = InsertionSort.new
-      assert_equal ["a","b"], isort.sort(["a","b"])
+      to_sort = ["a","b"]
+      isort = InsertionSort.new(to_sort)
+      assert_equal ["a","b"], isort.sort
     end
 
     def test_unsorted_two_element_array_returns_an_array_with_the_elements_flipped
-      isort = InsertionSort.new
-      assert_equal ["a","b"], isort.sort(["b","a"])
+      to_sort = ["b","a"]
+      isort = InsertionSort.new(to_sort)
+      assert_equal ["a","b"], isort.sort
     end
 
     def test_sample_sort
-      isort = InsertionSort.new
       to_sort = [4,2,0,3,1]
-      assert_equal [0,1,2,3,4], isort.sort(to_sort)
+      isort = InsertionSort.new(to_sort)
+      assert_equal [0,1,2,3,4], isort.sort
     end
 
     def test_sort_elements_already_sorted
-      isort = InsertionSort.new
       to_sort = (1..10).to_a
-      assert_equal to_sort, isort.sort(to_sort)
+      isort = InsertionSort.new(to_sort)
+      assert_equal (1..10).to_a, isort.sort
     end
 
     def test_sort_elements_sorted_in_reverse
-      isort = InsertionSort.new
       to_sort = (1..10).to_a.reverse
-      assert_equal (1..10).to_a, isort.sort(to_sort)
+      isort = InsertionSort.new(to_sort)
+      assert_equal (1..10).to_a, isort.sort
     end
 
 
     def test_sort_a_bunch_of_elements
-      isort = InsertionSort.new
       sorted = (1..100).to_a
       shuffled = sorted.shuffle
       shuffled = sorted.shuffle while shuffled == sorted
-      assert_equal sorted, isort.sort(shuffled)
+      isort = InsertionSort.new(shuffled)
+      assert_equal sorted, isort.sort
     end
 
   end
@@ -121,6 +124,24 @@ module SortingSuite
       ipisort = InsertionSort.new(shuffled)
       assert_equal shuffled.object_id, ipisort.inplace_sort.object_id
       assert_equal sorted, ipisort.inplace_sort
+    end
+  end
+
+  class InplaceVsNonInplaceInsertionSortTests < Minitest::Test
+    def test_inplace_vs_noninplace_insertion_sorts
+      sorted = (1..100).to_a
+      shuffled = sorted.shuffle
+      shuffled = sorted.shuffle while shuffled == sorted
+      array = shuffled.clone
+      nonipisort = InsertionSort.new(shuffled)
+      ipisort = InsertionSort.new(array)
+
+      assert_equal array.object_id, ipisort.inplace_sort.object_id
+      assert_equal sorted, ipisort.inplace_sort
+
+      refute_equal shuffled.object_id, nonipisort.sort.object_id
+      assert_equal sorted, nonipisort.sort
+
     end
   end
 end
