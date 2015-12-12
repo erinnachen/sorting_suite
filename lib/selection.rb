@@ -1,5 +1,6 @@
 class Selection
   def sort(unsorted)
+    unsorted = unsorted.clone
     sorted = []
     until unsorted.empty?
       sorted << remove_smallest_element(unsorted)
