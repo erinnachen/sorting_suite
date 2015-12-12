@@ -33,6 +33,12 @@ class BubbleSortTest < Minitest::Test
     assert_equal [0,1,2,3,4], bs.sort(to_sort)
   end
 
+  def test_sort_elements_sorted_in_reverse
+    bs = BubbleSort.new
+    to_sort = (1..10).to_a.reverse
+    assert_equal (1..10).to_a, bs.sort(to_sort)
+  end
+
   def test_sort_a_bunch_of_elements
     bs = BubbleSort.new
     sorted = (1..100).to_a
