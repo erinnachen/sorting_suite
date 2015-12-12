@@ -7,35 +7,38 @@ class InsertionSort
   def sort(unsorted)
     sorted = []
     unsorted.each do |element|
-      ind = 0
-      while ind < sorted.length && element > sorted[ind]
-        ind+=1
-      end
-      sorted.insert(ind,element)
+      index = find_index_for_insertion(sorted,element)
+      sorted.insert(index,element)
     end
     sorted
   end
 
+  def find_index_for_insertion(sorted,insert_value)
+    ind = sorted.index {|i| i > insert_value}
+    if ind.nil?
+      sorted.length
+    else
+      ind
+    end
+  end
+
+
   def inplace_sort
-    sort_ind = 1
-    while sort_ind < array.length
-      to_be_sorted = array[sort_ind]
-      insert_ind = find_insert_ind(sort_ind)
-      sort_ind.downto(insert_ind+1) do |ind|
-        array[ind] = array[ind-1]
-      end
-      array[insert_ind] = to_be_sorted
-      sort_ind += 1
+    array.each_with_index do |value, current_ind|
+      insert_ind = find_insert_ind(current_ind)
+      array.delete_at(current_ind)
+      array.insert(insert_ind, value)
     end
     array
   end
 
-  def find_insert_ind(sort_ind)
-    val = array[sort_ind]
-    insert_ind = sort_ind
-    while insert_ind > 0 && val < array[insert_ind-1]
-      insert_ind -= 1
+  def find_insert_ind(current_ind)
+    to_sort = array[current_ind]
+    insert_ind = array[0...current_ind].index {|sorted| sorted > to_sort}
+    if insert_ind.nil?
+      insert_ind = current_ind
     end
     insert_ind
   end
+
 end
