@@ -39,6 +39,12 @@ class BubbleSortTest < Minitest::Test
     assert_equal (1..10).to_a, bs.sort(to_sort)
   end
 
+  def test_sort_elements_already_sorted
+    bs = BubbleSort.new
+    to_sort = (1..10).to_a
+    assert_equal to_sort, bs.sort(to_sort)
+  end
+
   def test_sort_a_bunch_of_elements
     bs = BubbleSort.new
     sorted = (1..100).to_a
