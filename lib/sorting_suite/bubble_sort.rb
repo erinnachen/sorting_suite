@@ -5,16 +5,17 @@ module SortingSuite
     def initialize(array = [])
       @array = array
     end
-    
+
     def sort
-      length = array.length
+      sorted = array
+      length = sorted.length
       (length-1).times do
         (0...length-1).each do |i|
           a,b = array[i,2]
-          @array[i], @array[i+1] = swap(a,b) if a > b
+          sorted[i], sorted[i+1] = swap(a,b) if a > b
         end
       end
-      sorted = @array
+      sorted
     end
 
     def swap(a,b)
