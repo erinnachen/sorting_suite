@@ -1,13 +1,23 @@
 module SortingSuite
   class MergeSort
-    def sort(unsorted)
+    attr_reader :array
+    def initialize(array =[])
+      @array = array
+    end
+
+    def sort
+      _sort_recursive(array)
+    end
+
+    def _sort_recursive(unsorted)
       if unsorted.length > 1
         ihalf = unsorted.length/2
-        merge(sort(unsorted[0...ihalf]), sort(unsorted[ihalf..-1]))
+        merge(_sort_recursive(unsorted[0...ihalf]), _sort_recursive(unsorted[ihalf..-1]))
       else
         unsorted
       end
     end
+    private :_sort_recursive
 
     def merge(sorted1,sorted2)
       merged = []
