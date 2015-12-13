@@ -5,67 +5,71 @@ require_relative 'selection'
 
 module SortingSuite
   class Benchmark
-    attr_reader :sorters
+    attr_reader :sorters, :fastest_time, :fastest_sorter, :slowest_time, :slowest_sorter
 
     def initialize
       @sorters = known_sorters
+      @slowest_time = nil
+      @fastest_time = nil
+      @slowest_sorter = nil
+      @fastest_sorter = nil
     end
 
     def known_sorters
-      [BubbleSort, InsertionSort, MergeSort, Selection]
+      #[Mergesort]
+      [SortingSuite::BubbleSort, SortingSuite::InsertionSort, SortingSuite::Selection]
+    end
+
+    def get_runtime(sorter)
+      start_time = Time.now()
+      sorter.sort
+      end_time = Time.now()
+      end_time-start_time
     end
 
     def time(sorting_class, unsorted = (1..300).to_a.shuffle)
-      sorter = sorting_class.new
-      start_time = Time.now()
-      sorter.sort(unsorted)
-      end_time = Time.now()
-
-      "#{sorting_class} took %0.6f seconds" % (end_time-start_time)
+      sorter = sorting_class.new(unsorted)
+      runtime = get_runtime(sorter)
+      "#{sorter_string(sorter)} took %0.6f seconds" % (runtime)
     end
 
     def fastest(unsorted)
-      fastest_time = nil
-      fastest_sorter = nil
-      sorters.each do |sorter|
-        s = sorter.new
-        start_time = Time.now()
-        s.sort(unsorted)
-        end_time = Time.now()
-        run_time = end_time - start_time
-        if fastest_time.nil?
-          fastest_sorter = sorter
-          fastest_time = run_time
-        elsif run_time < fastest_time
-          fastest_sorter = sorter
-          fastest_time = run_time
-        end
-        puts "#{sorter} took %0.6f seconds" % (run_time)
+      sorters.each do |sorting_class|
+        sorter = sorting_class.new(unsorted)
+        runtime = get_runtime(sorter)
+        set_fastest_sorter(runtime, sorter)
+        puts "#{sorter_string(sorter)} took %0.6f seconds" % (runtime)
       end
-      "#{fastest_sorter} is the fastest"
+      "#{sorter_string(fastest_sorter)} is the fastest"
     end
 
     def slowest(unsorted)
-      slowest_time = nil
-      slowest_sorter = nil
-      sorters.each do |sorter|
-        s = sorter.new
-        start_time = Time.now()
-        s.sort(unsorted)
-        end_time = Time.now()
-        run_time = end_time - start_time
-        if slowest_time.nil?
-          slowest_sorter = sorter
-          slowest_time = run_time
-        elsif run_time > slowest_time
-          slowest_sorter = sorter
-          slowest_time = run_time
-        end
-        puts "#{sorter} took %0.6f seconds" % (run_time)
+      sorters.each do |sorting_class|
+        sorter = sorting_class.new(unsorted)
+        runtime = get_runtime(sorter)
+        set_slowest_sorter(runtime, sorter)
+        puts "#{sorter_string(sorter)} took %0.6f seconds" % (runtime)
       end
-      "#{slowest_sorter} is the slowest"
+      "#{sorter_string(slowest_sorter)} is the slowest"
     end
 
+    def set_fastest_sorter(runtime, sorter)
+      if fastest_time.nil? || runtime < fastest_time
+        @fastest_sorter = sorter
+        @fastest_time = runtime
+      end
+    end
+
+    def set_slowest_sorter(runtime, sorter)
+      if slowest_time.nil? || runtime > slowest_time
+        @slowest_sorter = sorter
+        @slowest_time = runtime
+      end
+    end
+
+    def sorter_string(sorter)
+      sorter.class.to_s[14..-1]
+    end
   end
 end
 
@@ -73,14 +77,15 @@ if __FILE__ == $0
   b = SortingSuite::Benchmark.new()
   sample = [3,3,4,5,1]
   unsorted = (1..5000).to_a.shuffle
-  puts b.time(BubbleSort, sample)
-  puts b.time(InsertionSort, sample)
-  puts b.time(MergeSort, sample)
-
-  puts b.time(BubbleSort)
-  puts b.time(InsertionSort)
-  puts b.time(MergeSort)
-
+  puts b.time(SortingSuite::BubbleSort, sample)
+  puts b.time(SortingSuite::InsertionSort, sample)
+  #puts b.time(SortingSuite::MergeSort, sample)
+  puts
+  puts b.time(SortingSuite::BubbleSort)
+  puts b.time(SortingSuite::InsertionSort)
+  #puts b.time(SortingSuite::MergeSort)
+  puts
   puts b.fastest(unsorted)
   puts b.slowest(unsorted)
+  puts
 end
