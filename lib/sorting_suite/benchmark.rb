@@ -16,8 +16,8 @@ module SortingSuite
     end
 
     def known_sorters
-      #[Mergesort]
-      [SortingSuite::BubbleSort, SortingSuite::InsertionSort, SortingSuite::Selection]
+      [SortingSuite::BubbleSort, SortingSuite::InsertionSort, SortingSuite::Selection,
+      SortingSuite::MergeSort]
     end
 
     def get_runtime(sorter)
@@ -33,8 +33,9 @@ module SortingSuite
       "#{sorter_string(sorter)} took %0.6f seconds" % (runtime)
     end
 
-    def fastest(unsorted)
+    def fastest(input)
       sorters.each do |sorting_class|
+        unsorted = input.dup
         sorter = sorting_class.new(unsorted)
         runtime = get_runtime(sorter)
         set_fastest_sorter(runtime, sorter)
@@ -43,8 +44,9 @@ module SortingSuite
       "#{sorter_string(fastest_sorter)} is the fastest"
     end
 
-    def slowest(unsorted)
+    def slowest(input)
       sorters.each do |sorting_class|
+        unsorted = input.dup
         sorter = sorting_class.new(unsorted)
         runtime = get_runtime(sorter)
         set_slowest_sorter(runtime, sorter)
@@ -79,13 +81,14 @@ if __FILE__ == $0
   unsorted = (1..5000).to_a.shuffle
   puts b.time(SortingSuite::BubbleSort, sample)
   puts b.time(SortingSuite::InsertionSort, sample)
-  #puts b.time(SortingSuite::MergeSort, sample)
+  puts b.time(SortingSuite::MergeSort, sample)
   puts
   puts b.time(SortingSuite::BubbleSort)
   puts b.time(SortingSuite::InsertionSort)
-  #puts b.time(SortingSuite::MergeSort)
+  puts b.time(SortingSuite::MergeSort)
   puts
   puts b.fastest(unsorted)
+  puts
   puts b.slowest(unsorted)
   puts
 end
